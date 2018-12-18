@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 class Input extends Component {
   state = {
-    category: "",
-    option: ""
+    category: ""
+    // option: ""
   }
   render() {
-    const categories = ['fall', 'test']
-    const options = {
-      fall: ['Fell', 'Found'],
-      test: ['a', 'b']
-    }
+    const categories = ['fall', 'year', 'mass']
+    // const options = {
+    //   fall: [],
+    //   test: ['a', 'b']
+    // }
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -22,16 +22,17 @@ class Input extends Component {
             </option>
           })}
         </select>
-        {this.state.category &&
-          <select onChange={this.changeOption}>
+        {/* 
+        {this.state.category && options[this.state.category].length > 0 &&
+          < select onChange={this.changeOption}>
             <option>Select an option</option>
             {options[this.state.category].map(option => {
               return <option value={option} key={option}>
                 {option}
               </option>
-            })}</select>}
+            })}</select>} */}
         <button type="submit">Go</button>
-      </form>
+      </form >
     );
   }
   changeCategory = (event) => {

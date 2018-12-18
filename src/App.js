@@ -7,14 +7,17 @@ import Graph from './components/Graph';
 class App extends Component {
   state = {
     category: '',
-    option: ''
+    dataSet: { data: [] },
+    formattedData: {}
   }
+
   render() {
+    console.log(this.state)
     return (
       <div className="App">
         <header><h1>Magical Meteorite Map</h1></header>
         <Input updateChart={this.updateChart} />
-        <Graph />
+        <Graph data={this.state.formattedData} />
       </div>
     );
   }
@@ -24,21 +27,35 @@ class App extends Component {
       category,
       option
     }, () => {
-      this.fetchData()
+      this.setState({
+        formattedData: this.formatData()
+      })
     })
   }
 
-  fetchData = () => {
-    if (this.state.category === 'fall') {
-      const query = `?$limit=50000&${this.state.category}=${this.state.option}`
-      Axios.get(`https://data.nasa.gov/resource/y77d-th95.json${query}`)
-        .then((data) => {
-          console.log(data)
-        })
-        .catch(console.log)
-    }
+  componentDidMount() {
+    this.fetchData()
   }
 
+  fetchData = () => {
+    const query = `?$limit=50000`
+    Axios.get(`https://data.nasa.gov/resource/y77d-th95.json${query}`)
+      .then((data) => {
+        this.setState({
+          dataSet: data
+        })
+      })
+      .catch(console.log)
+  }
+
+  formatData = () => {
+    const data = [...this.state.dataSet.data]
+    return data.reduce((acc, datum) => {
+      const label = datum[this.state.category]
+      acc[label] = ++acc[label] || 1;
+      return acc;
+    }, {})
+  }
 }
 
 export default App;
