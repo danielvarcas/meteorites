@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Input extends Component {
   state = {
-    categoryName: ""
+    category: "",
+    option: ""
   }
   render() {
-    const categories = ['fall']
-    const options = ['fall', 'fell']
+    const categories = ['fall', 'test']
+    const options = {
+      fall: ['Fell', 'Found'],
+      test: ['a', 'b']
+    }
+
     return (
-      <form>
-        <select onChange={this.handleChange}>
+      <form onSubmit={this.handleSubmit}>
+        <select onChange={this.changeCategory}>
           <option>Select a category:</option>
           {categories.map(category => {
             return <option value={category} key={category}>
@@ -18,22 +22,34 @@ class Input extends Component {
             </option>
           })}
         </select>
-        {this.state.categoryName && <select>{options.map(option => {
-          return <option value={option} key={option}>
-            {option}
-          </option>
-        })}</select>}
+        {this.state.category &&
+          <select onChange={this.changeOption}>
+            <option>Select an option</option>
+            {options[this.state.category].map(option => {
+              return <option value={option} key={option}>
+                {option}
+              </option>
+            })}</select>}
+        <button type="submit">Go</button>
       </form>
     );
   }
-  handleChange(event) {
-    console.log(event)
+  changeCategory = (event) => {
+    this.setState({
+      category: event.target.value
+    })
   }
 
+  changeOption = (event) => {
+    this.setState({
+      option: event.target.value
+    })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.updateChart(this.state.category, this.state.option);
+  }
 }
-
-Input.propTypes = {
-
-};
 
 export default Input;
