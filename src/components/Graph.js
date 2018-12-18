@@ -1,13 +1,13 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2';
 
 const Graph = props => {
   const data = {
     labels: [...Object.keys(props.data)],
     datasets: [
       {
-        label: 'My First dataset',
-        backgroundColor: 'rgba(255,99,132,0.2)',
+        label: `Meteorite impact by ${props.category}`,
+        backgroundColor: ['rgba(255,99,132,0.2)', 'rgba(0,99,132,0.2)', 'rgba(0,0,132,0.2)'],
         borderColor: 'rgba(255,99,132,1)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
@@ -19,7 +19,10 @@ const Graph = props => {
 
   return (
     <div>
-      <Bar data={data} />
+      {props.category === 'fall' && <Bar data={data} />}
+      {props.category === 'year' && <Line data={data} />}
+      {props.category === 'mass' && <Line data={data} />}
+      {props.category === 'recclass' && <Doughnut data={data} />}
     </div>
   );
 };

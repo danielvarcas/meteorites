@@ -6,7 +6,7 @@ class Input extends Component {
     // option: ""
   }
   render() {
-    const categories = ['fall', 'year', 'mass']
+    const categories = ['fall', 'year', 'mass', 'recclass']
     // const options = {
     //   fall: [],
     //   test: ['a', 'b']
